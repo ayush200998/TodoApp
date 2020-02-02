@@ -10,15 +10,15 @@ app.use(express.static("public"))
 
 let connectionString = "mongodb+srv://todoAppUser:passqbtau20@cluster0-l2i6m.mongodb.net/todoApp?retryWrites=true&w=majority"
 
-let port = process.env.PORT
-  if(port === null || port === ""){
-    port = 9000
-  }
+let port = process.env.PORT || 9000
+  // if(port === null || port === ""){
+  //   port = 9000
+  // }
 
 mongodb.connect(connectionString , {useNewUrlParser : true ,  useUnifiedTopology: true } , function(err , client){
         db = client.db()
         app.listen(port, function(){
-            console.log("listening on port 9000")
+            console.log(`listening on port ${port}`)
         })
 })
 
@@ -39,7 +39,7 @@ app.use(express.urlencoded({extended : false}))
     }
 
 app.get('/' ,passwordProtected, function(req,res){
-
+      // console.log(port)
     db.collection("items").find().toArray(function(err , items){
         res.send(`<!DOCTYPE html>
     <html>
